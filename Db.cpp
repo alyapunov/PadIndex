@@ -87,7 +87,7 @@ void loadDb()
     {
         uint32_t id = std::stoi(sReader.Fields()[0]);
         uint32_t pad_id = std::stoi(sReader.Fields()[1]);
-        const std::string& type = sReader.Fields()[2];
+        const std::string type = sReader.Fields()[2];
         check(type == "positive" || type == "negative", "Wrong targeting type!");
         bool positive = type == "positive";
         if (Users.count(id) == 0 || Pads.count(pad_id) == 0)
@@ -114,7 +114,7 @@ void loadDb()
     {
         uint32_t id = std::stoi(sReader.Fields()[0]);
         uint32_t pad_id = std::stoi(sReader.Fields()[1]);
-        const std::string& type = sReader.Fields()[2];
+        const std::string type = sReader.Fields()[2];
         check(type == "positive" || type == "negative", "Wrong targeting type!");
         bool positive = type == "positive";
         if (Pads.count(pad_id) == 0)
@@ -141,7 +141,7 @@ void loadDb()
     {
         uint32_t id = std::stoi(sReader.Fields()[0]);
         uint32_t pad_id = std::stoi(sReader.Fields()[1]);
-        const std::string& type = sReader.Fields()[2];
+        const std::string type = sReader.Fields()[2];
         check(type == "positive" || type == "negative", "Wrong targeting type!");
         bool positive = type == "positive";
         if (Campaigns.count(id) == 0 || Pads.count(pad_id) == 0)
