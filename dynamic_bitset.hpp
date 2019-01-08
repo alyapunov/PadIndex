@@ -5,6 +5,11 @@
 #include <climits>
 #include <functional>
 #include <vector>
+#ifdef WIN32
+#include <intrin.h>
+#endif
+
+#include "Win.hpp"
 
 namespace target {
 
@@ -42,7 +47,7 @@ class dynamic_bitset
 {
 public:
     using size_type = size_t;
-    static constexpr size_type npos = SIZE_MAX;
+    static const size_type npos = SIZE_MAX;
 
     // Initialization.
     dynamic_bitset() = default;
@@ -296,8 +301,8 @@ public:
 
 private:
     using word_t = unsigned long long;
-    static constexpr size_t WORD_BITS = sizeof(word_t) * CHAR_BIT;
-    static constexpr size_t WORD_MAX = static_cast<word_t>(-1);
+    static const size_t WORD_BITS = sizeof(word_t) * CHAR_BIT;
+	static const word_t WORD_MAX = static_cast<word_t>(-1);
 
     // A couple of methods for simplification of bit access.
     word_t& word(size_t aPos)
@@ -336,13 +341,23 @@ private:
     // Population count.
     static size_t bitscount(word_t aWord)
     {
+#ifdef WIN32
+		return _mm_popcnt_u64(aWord);
+#else
         return __builtin_popcountll(aWord);
+#endif
     }
 
     // Count trailing zeros.
     static size_t ctz(word_t aWord)
     {
+#ifdef WIN32
+		unsigned long sIndex;
+		_BitScanForward64(&sIndex, aWord);
+		return sIndex;
+#else
         return __builtin_ctzll(aWord);
+#endif
     }
 
     // Bits packed in words.

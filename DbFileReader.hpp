@@ -9,6 +9,8 @@
 #include "Timer.hpp"
 #include "Utils.hpp"
 
+#include "Win.hpp"
+
 struct CDbFileReader
 {
     CDbFileReader(const std::string& filename, const std::initializer_list<const char*>& fields)

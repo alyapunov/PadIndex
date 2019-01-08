@@ -6,6 +6,7 @@
 
 #include "Db.hpp"
 #include "dynamic_bitset.hpp"
+#include "Win.hpp"
 
 // Campaign in index.
 struct IndexedCampaign

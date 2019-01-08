@@ -17,7 +17,7 @@ std::vector<target::dynamic_bitset> PadCampaignBitsetBank;
 
 static target::dynamic_bitset loadBitsetFromString(const std::string& aStr,
                                                    size_t aOriginalSize,
-                                                   const std::vector<uint32_t>& aSkipBits)
+                                                   const std::vector<size_t>& aSkipBits)
 {
     assert(aStr.size() == (aOriginalSize + 3)/ 4);
     target::dynamic_bitset sResult(aOriginalSize - aSkipBits.size());
@@ -50,7 +50,7 @@ void loadPrecalculatedFilters()
     // Due to lags in dumping data files, some campaigns can be not present in local DB.
     // Let's skip them and delete their bit from bitsets.
     size_t sOriginalCampaignCount = 0, sOriginalBannerCount = 0;
-    std::vector<uint32_t> sSkippedCampaigns, sSkippedBanners;
+    std::vector<size_t> sSkippedCampaigns, sSkippedBanners;
 
     const std::string sFilename = "Data/index.txt";
     std::fstream sFile(sFilename, std::fstream::in);
@@ -124,7 +124,7 @@ void loadPrecalculatedFilters()
                 {
                     ++sPosInIndexedCampaigns;
                     check(sPosInIndexedCampaigns != IndexedCampaigns.size(), "Campaign disorder");
-                    IndexedCampaigns[sPosInIndexedCampaigns].m_FirstBannerPosition = IndexedBanners.size();
+                    IndexedCampaigns[sPosInIndexedCampaigns].m_FirstBannerPosition = (uint32_t)IndexedBanners.size();
                     IndexedCampaigns[sPosInIndexedCampaigns].m_BannerCount = 0;
                 }
                 check(IndexedCampaigns[sPosInIndexedCampaigns].m_CampaignId == campaign_id, "Campaign disorder");

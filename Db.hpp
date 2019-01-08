@@ -3,6 +3,8 @@
 #include <unordered_map>
 #include <vector>
 
+#include "Win.hpp"
+
 struct Pad
 {
     explicit Pad(uint32_t id = 0) : m_Id(id) {}

@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "dynamic_bitset.hpp"
+#include "Win.hpp"
 
 // Structure that describes filters of a pad.
 struct PadFilter

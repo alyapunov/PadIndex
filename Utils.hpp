@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "Timer.hpp"
+#include "Win.hpp"
 
 inline void fatal(const char* msg)
 {
@@ -23,7 +24,7 @@ public:
     CTitle(const std::string& message)
     {
         m_Timer.Start();
-        std::cout << message << "...";
+        std::cout << message.c_str() << "...";
     }
     ~CTitle()
     {

@@ -28,18 +28,18 @@ public:
 		started = false;
 		result = now() - startTime;
 	}
-	long ElapsedMicrosec() const
+	unsigned long long ElapsedMicrosec() const
 	{
 		if (started)
 			return now() - startTime;
 		else
 			return result;
 	}
-	long ElapsedMillisec() const
+	unsigned long long ElapsedMillisec() const
 	{
 		return ElapsedMicrosec() / 1000;
 	}
-	long ElapsedSec() const
+	unsigned long long ElapsedSec() const
 	{
 		return ElapsedMicrosec() / 1000000;
 	}
@@ -59,13 +59,13 @@ public:
 	{
 		return Mrps(count) * 1000000;
 	}
-	long ElapsedMicroSec() const { return ElapsedMicrosec(); }
-	long ElapsedMicroseconds() const { return ElapsedMicrosec(); }
-	long ElapsedMicroSeconds() const { return ElapsedMicrosec(); }
-	long ElapsedMilliSec() const { return ElapsedMillisec(); }
-	long ElapsedMilliseconds() const { return ElapsedMillisec(); }
-	long ElapsedMilliSeconds() const { return ElapsedMillisec(); }
-	long ElapsedSeconds() const { return ElapsedSec(); }
+	unsigned long long ElapsedMicroSec() const { return ElapsedMicrosec(); }
+	unsigned long long ElapsedMicroseconds() const { return ElapsedMicrosec(); }
+	unsigned long long ElapsedMicroSeconds() const { return ElapsedMicrosec(); }
+	unsigned long long ElapsedMilliSec() const { return ElapsedMillisec(); }
+	unsigned long long ElapsedMilliseconds() const { return ElapsedMillisec(); }
+	unsigned long long ElapsedMilliSeconds() const { return ElapsedMillisec(); }
+	unsigned long long ElapsedSeconds() const { return ElapsedSec(); }
 
 private:
 	bool started;
