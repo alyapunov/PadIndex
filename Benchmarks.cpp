@@ -8,29 +8,46 @@
 
 static void selectCampaigns()
 {
-    target::dynamic_bitset sAll(IndexedCampaigns.size());
-    {
-        CTitle title("Benchmark: select all campaigns for all pads");
+	size_t sWantPads = 10000;
+	size_t sGotPads = 0;
+	std::cout << "// Test for " << sWantPads << " leaf pads:" << std::endl;
+	target::dynamic_bitset sAll(IndexedCampaigns.size());
+	{
+        CTitle title("Benchmark: select all campaigns for pads");
 
         for (auto& sPair : Pads)
         {
             uint32_t sPadId = sPair.first;
-            sAll |= campaignsByPad(sPadId);
+			const Pad& sPad = sPair.second;
+			if (!sPad.m_DirectChildren.empty())
+				continue; // Skip non leaf pads.
+			sGotPads++;
+			sAll |= campaignsByPad(sPadId);
+			if (sGotPads >= sWantPads)
+				break;
         }
     }
+	check(sGotPads == sWantPads, "Not enough leaf pads");
     std::cout << "Total " << sAll.count() << " from " << IndexedCampaigns.size() << std::endl;
 }
 
 static void selectCampaignsAndBanners()
 {
-    size_t sTotal = 0;
+	size_t sWantPads = 1000;
+	size_t sGotPads = 0;
+	std::cout << "// Test for " << sWantPads << " leaf pads:" << std::endl;
+	size_t sTotal = 0;
     {
-        CTitle title("Benchmark: select all campaigns and banners for all pads");
+        CTitle title("Benchmark: select all campaigns and banners for pads");
 
         for (auto& sPair : Pads)
         {
             uint32_t sPadId = sPair.first;
-            target::dynamic_bitset sCampBitset = campaignsByPad(sPadId);
+			const Pad& sPad = sPair.second;
+			if (!sPad.m_DirectChildren.empty())
+				continue; // Skip non leaf pads.
+			sGotPads++;
+			target::dynamic_bitset sCampBitset = campaignsByPad(sPadId);
             const std::unordered_set<uint32_t>& sFilteredBanners = filteredBannersByPad(sPadId);
             for (size_t sBit = sCampBitset.find_first();
                  sBit != sCampBitset.npos;
@@ -44,15 +61,16 @@ static void selectCampaignsAndBanners()
                         sTotal++;
                 }
             }
-        }
+			if (sGotPads >= sWantPads)
+				break;
+		}
     }
+	check(sGotPads == sWantPads, "Not enough leaf pads");
     std::cout << "Total " << sTotal << std::endl;
 }
 
 void runBench()
 {
-    std::cout << "// Benchmarks are made for all pads, real request checks only one pad" << std::endl;
-    std::cout << "// So to get real request latency the times must be divided by " << Pads.size() << std::endl;
     selectCampaigns();
     selectCampaignsAndBanners();
 }
